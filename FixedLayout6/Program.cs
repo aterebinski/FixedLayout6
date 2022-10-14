@@ -29,7 +29,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
-    options.Password.RequiredLength = 12;
+    options.Password.RequiredLength = 6;
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);

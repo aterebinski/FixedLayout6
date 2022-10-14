@@ -74,6 +74,7 @@ namespace FixedLayout6.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
+
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
@@ -116,18 +117,24 @@ namespace FixedLayout6.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            _logger.LogInformation("=====================>Jeden");
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            _logger.LogInformation("=====================>2");
             if (ModelState.IsValid)
             {
+                _logger.LogInformation("=====================>3");
                 var user = CreateUser();
-
+                _logger.LogInformation("=====================>4");
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
+                _logger.LogInformation("=====================>5");
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation("=====================>6");
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
